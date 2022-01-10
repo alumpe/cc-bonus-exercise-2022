@@ -100,7 +100,7 @@ that has the following format:
 >
 > == Solution 2.2
 >
-> Attacker address: <The whitelisted address you have used for your exploit>
+> Attacker address: < The whitelisted address you have used for your exploit>
 
 The code you have deployed for exercise 1.1 needs to be submitted in form of a
 solidity source code file. The file has to be called   
