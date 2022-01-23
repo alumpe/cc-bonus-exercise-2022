@@ -1,0 +1,24 @@
+
+
+= Solution Bonus Exercise
+
+== Group Information
+
+Adrian, Lumpe, 2734248
+Konstantinos, Papa, 2954633
+
+== Solution 1.1
+
+Contract address: < Address of the deployed hash-time-lock store contract>
+
+== Solution 1.2
+
+<Solution for exercise 1.2 as free text>
+
+== Solution 2.1
+
+<Solution for exercise 2.1 as free text>
+
+== Solution 2.2
+
+Attacker address: < The whitelisted address you have used for your exploit>
