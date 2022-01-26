@@ -1,5 +1,3 @@
-
-
 = Solution Bonus Exercise
 
 == Group Information
