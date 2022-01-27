@@ -7,11 +7,11 @@ Konstantinos, Papa, 2954633
 
 == Solution 1.1
 
-Contract address: < Address of the deployed hash-time-lock store contract>
+Contract address: 0x0177C87d72af6119A9fB52984aa406aA68C792D0
 
 == Solution 1.2
 
-<Solution for exercise 1.2 as free text>
+This type of hash-locking is very vulnerable to brute force attacks. An attacker could calculate the hashes for common uints (1 to 1000000 for example) and compare them to those hashes in the contracts storage under which some ETH is deposited. He then just needs to call the claim() function with the corresponding uint and can steal the deposited ETH.
 
 == Solution 2.1
 
