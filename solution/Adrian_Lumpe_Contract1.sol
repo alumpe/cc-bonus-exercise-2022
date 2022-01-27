@@ -44,8 +44,9 @@ contract TheStore is HTLStore {
 
     // deposit should add the sent ether to the amount stored for the lock. The
     // claim period timeout should be reset to now + duration.
-    function deposit(bytes32 lock, uint duration) external payable onlyBenefactor(lock) validLock(lock) {
+    function deposit(bytes32 lock, uint duration) external payable validLock(lock) {
         if(locks[lock].exists) {
+            require(msg.sender == locks[lock].benefactor, "Only benefactor can call this.");
             locks[lock].amount += msg.value;
             locks[lock].timeout = uint32(now + duration);
         }
@@ -53,7 +54,7 @@ contract TheStore is HTLStore {
             locks[lock] = Lock(msg.sender, msg.value, uint32(now + duration), true, false);
         }
 
-        emit Deposited(locks[lock].benefactor, lock, locks[lock].amount, locks[lock].timeout);
+        emit Deposited(locks[lock].benefactor, lock, msg.value, locks[lock].timeout);
     }
 
     // claim should allow a holder of the correct pre-image key to withdraw the
@@ -61,8 +62,8 @@ contract TheStore is HTLStore {
     function claim(uint key) external validLock(keccak256(abi.encodePacked(key))) {
         bytes32 lock = keccak256(abi.encodePacked(key));
 
-        require(locks[lock].amount > 0);
-        require(now <= locks[lock].timeout); // check that the claim period is not over, yet
+        require(locks[lock].amount > 0, "The lock does not contain any ETH.");
+        require(now <= locks[lock].timeout, "The lock has timed out and is not claimable anymore."); // check that the claim period is not over, yet
 
         msg.sender.transfer(locks[lock].amount);
         locks[lock].blocked = true;
@@ -73,7 +74,7 @@ contract TheStore is HTLStore {
     // recover should allow the initial depositor to recover the ether stored
     // for the lock after the claim period has ended.
     function recover(bytes32 lock) external onlyBenefactor(lock) validLock(lock) {
-        require(now > locks[lock].timeout);
+        require(now > locks[lock].timeout, "Lock is still claimable.");
 
         msg.sender.transfer(locks[lock].amount);
         locks[lock].blocked = true;
