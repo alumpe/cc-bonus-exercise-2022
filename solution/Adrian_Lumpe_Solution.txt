@@ -15,8 +15,8 @@ Contract address: < Address of the deployed hash-time-lock store contract>
 
 == Solution 2.1
 
-<Solution for exercise 2.1 as free text>
+The wallet from file contracts/Wallet.sol is vulnerable to a re-entrancy attack. In the withdraw() function the current balance is sent to the sender (line 33) before setting the balance to 0 (line 35). This enables a malicious sender to recursively call the withdraw() function from within the fallback() function of the sending contract to withdraw more than originally deposited. In our implementation we withdraw 5 times the amount we deposited using an internal counter to limit the recursion.
 
 == Solution 2.2
 
-Attacker address: < The whitelisted address you have used for your exploit>
+Attacker address: 0xe26bF26076A69b4de0483c2b79d3Dcb56402C2b1
